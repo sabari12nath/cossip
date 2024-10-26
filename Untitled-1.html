@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anon Gossip</title>
+    <style>
+        /* Base styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            background-color: #ff6347;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.8em;
+        }
+
+        /* Form section */
+        .form-section {
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        .form-section textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ff6347;
+            border-radius: 5px;
+            resize: none;
+            font-size: 1em;
+            outline: none;
+        }
+
+        .form-section button {
+            margin-top: 10px;
+            padding: 10px 15px;
+            width: 100%;
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        /* Posts section */
+        .posts-section {
+            padding: 20px;
+        }
+
+        .post {
+            background-color: #ffefdb;
+            border: 2px solid #ff6347;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .post h3 {
+            margin: 0;
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        .post p {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        /* Interaction buttons */
+        .post .actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .post button {
+            background-color: transparent;
+            border: none;
+            color: #ff6347;
+            font-size: 0.9em;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Anon Gossip</h1>
+            <p>Share your secrets, spill the tea!</p>
+        </div>
+
+        <!-- Gossip Submission Form -->
+        <div class="form-section">
+            <textarea id="gossipInput" rows="3" placeholder="Got some gossip? Spill it here..."></textarea>
+            <button onclick="postGossip()">Post Gossip</button>
+        </div>
+
+        <!-- Gossip Posts -->
+        <div class="posts-section" id="postsSection">
+            <!-- Example post (will be filled with JS) -->
+            <!-- <div class="post">
+                <h3>Anonymous</h3>
+                <p>Did you hear about...?</p>
+                <div class="actions">
+                    <button onclick="likePost(this)">❤ Like</button>
+                    <button onclick="commentPost()">💬 Comment</button>
+                </div>
+            </div> -->
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to handle posting
+        function postGossip() {
+            const gossipText = document.getElementById("gossipInput").value;
+            if (gossipText.trim()) {
+                const postSection = document.getElementById("postsSection");
+
+                // Create post container
+                const post = document.createElement("div");
+                post.classList.add("post");
+
+                // Create post content
+                post.innerHTML = `
+                    <h3>Anonymous</h3>
+                    <p>${gossipText}</p>
+                    <div class="actions">
+                        <button onclick="likePost(this)">❤ Like</button>
+                        <button onclick="commentPost()">💬 Comment</button>
+                    </div>
+                `;
+
+                // Add the new post to the top of the posts section
+                postSection.prepend(post);
+
+                // Clear the input
+                document.getElementById("gossipInput").value = "";
+            }
+        }
+
+        // Dummy functions for like and comment
+        function likePost(button) {
+            button.textContent = button.textContent === "❤ Like" ? "❤ Liked!" : "❤ Like";
+        }
+
+        function commentPost() {
+            alert("Comment functionality coming soon!");
+        }
+    </script>
+
+</body>
+
+</html>
