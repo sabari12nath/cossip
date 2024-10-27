@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Story Postings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.3/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .hidden { display: none; }
+    </style>
+</head>
+<body class="bg-[#264653] p-4" style="font-family: 'Montserrat', sans-serif;">
+    <div class="max-w-md mx-auto bg-[#2A9D8F] p-6 rounded-lg shadow-lg">
+        <h1 class="text-2xl font-bold mb-4 text-[#E9C46A]">Post Your Story</h1>
+        <textarea id="storyInput" class="w-full p-2 border border-gray-300 rounded-md" rows="5" placeholder="Write your story..."></textarea>
+        <button id="submitBtn" class="mt-4 bg-[#E9C46A] text-[#264653] p-2 rounded-md">Submit</button>
+        <div id="message" class="hidden mt-4 text-[#edf2f4]"></div>
+        <h2 class="text-xl font-bold mt-6 text-[#E9C46A]">Stories</h2>
+        <ul id="storyList" class="mt-2 space-y-2"></ul>
+    </div>
+
+    <script>
+        const submitBtn = document.getElementById('submitBtn');
+        const storyInput = document.getElementById('storyInput');
+        const storyList = document.getElementById('storyList');
+        const message = document.getElementById('message');
+        
+        const bannedUsers = JSON.parse(localStorage.getItem('bannedUsers')) || [];
+
+        const explicitWords = ["porn", "sex", "bondage", "boobs","thighs","nipples","fuck"]; // Add explicit words here
+
+        function isBanned() {
+            return bannedUsers.includes(storyInput.value);
+        }
+
+        function censorContent(content) {
+            explicitWords.forEach(word => {
+                const regex = new RegExp(word, 'gi');
+                content = content.replace(regex, '****');
+            });
+            return content;
+        }
+
+        function banUser(user) {
+            bannedUsers.push(user);
+            localStorage.setItem('bannedUsers', JSON.stringify(bannedUsers));
+        }
+
+        submitBtn.addEventListener('click', () => {
+            const story = storyInput.value.trim();
+
+            if (isBanned(story)) {
+                message.textContent = "You cannot post stories due to a previous violation.";
+                message.classList.remove('hidden');
+                return;
+            }
+
+            if (story.length === 0) {
+                return;
+            }
+
+            const censoredStory = censorContent(story);
+            if (censoredStory !== story) {
+                message.textContent = "Your story contained explicit words and has been altered.";
+                message.classList.remove('hidden');
+                banUser(storyInput.value);
+            } else {
+                message.classList.add('hidden');
+            }
+
+            if (censoredStory === story) {
+                const listItem = document.createElement('li');
+                listItem.textContent = censoredStory;
+                storyList.appendChild(listItem);
+            } else {
+                banUser(storyInput.value);
+                message.textContent = "Your story contained explicit words and has been discarded.";
+                message.classList.remove('hidden');
+            }
+            storyInput.value = '';
+            message.classList.add('hidden');
+        });
+    </script>
+</body>
+</html>
