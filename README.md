@@ -14,10 +14,10 @@
 - Member 3: Sabarinath PS - SNM IMT
 
 ### Project Description
-A website to post gossip that happens in a particular college and can only be accessed by the staff and students of that college the sender's information will be anonymous
+A website to gossip about your college life and to let your inner feelings out through a website. this service is for colleges only to make their lives even spicier. whole college chat stream will be tagged anonymous. personal messages will not be anonymous.
 
 ### The Problem (that doesn't exist)
-it helps people who doesn't want their identity to reveal speak about thinks without any fear
+it helps people who doesn't want their identity to reveal speak about things without any fear
 
 ### The Solution (that nobody asked for)
 by making the sender's information and name anonymous
